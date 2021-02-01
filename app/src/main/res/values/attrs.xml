@@ -2,5 +2,10 @@
 <resources>
     <declare-styleable name="LoadingButton">
 <!--   TODO: create custom attributes for the view-->
+        <attr name="state" format="enum">
+            <enum name="clicked" value="0"/>
+            <enum name="loading" value="1"/>
+            <enum name="completed" value="2"/>
+        </attr>
     </declare-styleable>
 </resources>

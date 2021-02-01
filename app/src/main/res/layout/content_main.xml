@@ -93,6 +93,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="60dp"
         android:layout_margin="20dp"
+        app:state="completed"
         app:layout_constraintBottom_toBottomOf="parent"
          />
 

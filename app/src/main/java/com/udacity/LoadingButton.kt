@@ -22,6 +22,13 @@ class LoadingButton @JvmOverloads constructor(
 
     private val valueAnimator = ValueAnimator()
 
+    private var selectedRadioButton = SENTINEL
+
+    fun setSelectedRadioButton(button: Int) {
+        selectedRadioButton = button
+    }
+
+
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
         Log.i("LoadingButton", "p $p old: ${old} -> new: ${new}")
         when(new) {
@@ -50,11 +57,30 @@ class LoadingButton @JvmOverloads constructor(
 
 
     init {
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.LoadingButton,
+            0, 0).apply {
 
+            try {
+                buttonState = when(getInteger(R.styleable.LoadingButton_state, 0)){
+                    0 -> ButtonState.Clicked
+                    1 -> ButtonState.Loading
+                    2 -> ButtonState.Completed
+                    else -> ButtonState.Completed
+                }
+            } finally {
+                recycle()
+            }
+        }
     }
 
     override fun performClick(): Boolean {
         super.performClick()
+        if (selectedRadioButton == SENTINEL) {
+            return true
+        }
+
         buttonState = ButtonState.Clicked
         Toast.makeText(context, context.getString(R.string.toast_message),Toast.LENGTH_LONG).show()
         return true

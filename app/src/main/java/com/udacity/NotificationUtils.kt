@@ -9,13 +9,25 @@ import androidx.core.app.NotificationCompat
 
 val NOTIFICATION_ID = 0
 
-fun NotificationManager.sendNotification(radioButtonId: Int, applicationContext: Context) {
+fun NotificationManager.sendNotification(
+    statusValue: Int,
+    colorValue: Int,
+    messageValue: Int,
+    applicationContext: Context) {
 
     val contentIntent = Intent(applicationContext, DetailActivity::class.java)
     contentIntent.putExtra(
-        applicationContext.getString(R.string.radio_button_id),
-        radioButtonId)
-    Log.i("NotificationUtils","radioButton send: ${radioButtonId}")
+        applicationContext.getString(R.string.status_id),
+        statusValue)
+
+    contentIntent.putExtra(
+        applicationContext.getString(R.string.color_id),
+        colorValue)
+
+    contentIntent.putExtra(
+        applicationContext.getString(R.string.message_id),
+        messageValue)
+
 
     val contentPendingIntent = PendingIntent.getActivity(
         applicationContext,

@@ -14,31 +14,18 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         setSupportActionBar(toolbar)
-        val radioButtonId = intent.getIntExtra(getString(R.string.radio_button_id), 0)
+        val status = intent.getIntExtra(getString(R.string.status_id), 0)
+        val color = intent.getIntExtra(getString(R.string.color_id), 0)
+        val message = intent.getIntExtra(getString(R.string.message_id),0)
 
         // Check which radio button was clicked
-        when (radioButtonId) {
-            R.id.radioButton1 -> {
-                initializeViews("Success", R.color.colorPrimaryDark, R.string.glide)
-            }
-
-            R.id.radioButton2 -> {
-                initializeViews("Fail", R.color.red, R.string.loadapp)
-            }
-
-            R.id.radioButton3 -> {
-                initializeViews("Success", R.color.colorPrimaryDark, R.string.retrofit)
-            }
-            else -> {
-                Log.i("DetailActivity", "Unknown radio button: ${radioButtonId}")
-            }
-        }
+        initializeViews(status, color, message)
     }
 
-    fun initializeViews(statusValueText: String, statusValueColor: Int, fileNameText: Int) {
-        status_value.setText(statusValueText)
+    fun initializeViews(statusValueText: Int, statusValueColor: Int, fileNameText: Int) {
+        status_value.setText(resources.getString(statusValueText))
         status_value.setTextColor(resources.getColor(statusValueColor))
-        file_name_value.setText(fileNameText)
+        file_name_value.setText(resources.getString(fileNameText))
     }
 
     fun onOkayButtonClicked(view: View) {

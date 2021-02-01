@@ -22,9 +22,16 @@
 
     <string name="toast_message">Please select file to download</string>
 
-    <string name="radio_button_id">radioButtonId</string>
 
 
     <string name="file_name">File name: </string>
     <string name="status">Status: </string>
+
+
+    <string name="status_id">statusId</string>
+    <string name="color_id">colorId</string>
+    <string name="message_id">messageId</string>
+
+    <string name="success">Success</string>
+    <string name="failed">Failed</string>
 </resources>

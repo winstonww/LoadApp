@@ -21,7 +21,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-
+val SENTINEL = 0
 class MainActivity : AppCompatActivity() {
 
     private var downloadID: Long = 0
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var notificationManager: NotificationManager
     private lateinit var pendingIntent: PendingIntent
     private lateinit var action: NotificationCompat.Action
-    private var selectedButton = 0
+    private var selectedButton = SENTINEL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,9 @@ class MainActivity : AppCompatActivity() {
         )
 
         custom_button.setOnClickListener {
-            download()
+            if (selectedButton != SENTINEL) {
+                download()
+            }
         }
     }
 
@@ -86,7 +88,35 @@ class MainActivity : AppCompatActivity() {
                 NotificationManager::class.java
             ) as NotificationManager
 
-            notificationManager.sendNotification(selectedButton, context)
+            when (selectedButton) {
+                R.id.radioButton1 -> {
+                    notificationManager.sendNotification(
+                        R.string.success,
+                        R.color.colorPrimaryDark,
+                        R.string.glide,
+                        context)
+                }
+
+                R.id.radioButton2 -> {
+                    notificationManager.sendNotification(
+                        R.string.failed,
+                        R.color.red,
+                        R.string.loadapp,
+                        context)
+                }
+
+                R.id.radioButton3 -> {
+                    notificationManager.sendNotification(
+                        R.string.success,
+                        R.color.colorPrimaryDark,
+                        R.string.retrofit,
+                        context)
+                }
+                else -> {
+                    Log.i("DetailActivity", "Unknown radio button: ${selectedButton}")
+                }
+            }
+
 
             Log.i("MainActivity", "in on receive")
         }
@@ -99,8 +129,10 @@ class MainActivity : AppCompatActivity() {
             if (checked) {
                 selectedButton = view.getId()
                 Log.i("MainActivity", "selected button: ${selectedButton}")
+            } else {
+                selectedButton = SENTINEL
             }
-
+            custom_button.setSelectedRadioButton(selectedButton)
         }
     }
 
